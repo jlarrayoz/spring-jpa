@@ -1,4 +1,4 @@
-package edu.curso.models;
+package edu.curso.models.memory;
 
 
 import java.util.HashMap;
@@ -9,12 +9,13 @@ import java.util.Optional;
 
 import edu.curso.domain.Ingrediente;
 import edu.curso.domain.TipoIngrediente;
+import edu.curso.models.IngredienteRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class IngredienteDAO {
+public final class IngredienteMemoryRepository implements IngredienteRepository {
 
 	private static Map<String, Ingrediente> ingredientes;
 	
@@ -30,14 +31,21 @@ public final class IngredienteDAO {
 	}
 
 	@Getter(lazy = true)
-	private static final IngredienteDAO instance = new IngredienteDAO();
+	private static final IngredienteMemoryRepository instance = new IngredienteMemoryRepository();
 
-	
-	public List<Ingrediente> getAll() {
+
+	@Override
+	public List<Ingrediente> findAll() {
 		return new ArrayList<Ingrediente>(ingredientes.values());
 	}
-	
-	public Optional<Ingrediente> getIngredienteById(String id){
+
+	@Override
+	public Optional<Ingrediente> findById(String id) {
 		return Optional.ofNullable(ingredientes.get(id));
+	}
+
+	@Override
+	public Ingrediente save(Ingrediente ingrediente) {
+		return ingredientes.put(ingrediente.getId(), ingrediente);
 	}
 }

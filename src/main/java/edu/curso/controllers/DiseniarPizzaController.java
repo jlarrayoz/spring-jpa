@@ -16,7 +16,7 @@ import edu.curso.domain.Ingrediente;
 import edu.curso.domain.OrdenPizza;
 import edu.curso.domain.Pizza;
 import edu.curso.domain.TipoIngrediente;
-import edu.curso.models.IngredienteDAO;
+import edu.curso.models.memory.IngredienteMemoryRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,7 +31,7 @@ public class DiseniarPizzaController {
 	public void agregarIngredientesAlModelo(Model model) {
 		
 		//Obtengo todos los ingredientes declarados
-		List<Ingrediente>  ingredientes = IngredienteDAO.getInstance().getAll();
+		List<Ingrediente>  ingredientes = IngredienteMemoryRepository.getInstance().findAll();
 		
 		TipoIngrediente[] tipos = TipoIngrediente.values();
 		for (TipoIngrediente tipoIngrediente : tipos) {
