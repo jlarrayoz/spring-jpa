@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import edu.curso.domain.OrdenPizza;
+import edu.curso.models.jdbc.OrdenPizzaJdbcRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +19,13 @@ import lombok.extern.slf4j.Slf4j;
 @SessionAttributes("ordenPizza")
 public class OrdenPizzaController {
 	
+	private OrdenPizzaJdbcRepository ordenPizzaRepo;
 	
+	public OrdenPizzaController(OrdenPizzaJdbcRepository ordenPizzaRepo) {
+		super();
+		this.ordenPizzaRepo = ordenPizzaRepo;
+	}
+
 	@GetMapping("/actual")
 	public String mostrarFormulario() {
 		log.info("Redirigiendo a la orden actual");
@@ -41,7 +48,10 @@ public class OrdenPizzaController {
 			return "ordenes";
 		}
 		
-		//Como la orden ya fue ingresada, se limpia la sessión para que
+		//Usamos el repo de ordenPizza para guardar la orden en la BD
+		ordenPizzaRepo.save(ordenPizza);
+		
+		//Como la orden ya fue ingresada, se limpia la sessión para comenzar nuevamente
 		sessionStatus.setComplete();
 		return "redirect:/";
 	}

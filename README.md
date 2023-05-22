@@ -1,5 +1,5 @@
 # spring-jpa
-En este proyecto vamos a agregar el uso de persistencia (JDBC + JPA) al proyecto de pedidos de pizza
+En este proyecto vamos a agregar el uso de persistencia (SPRING-JDBC) al proyecto de pedidos de pizza
 
 
 **Primero vamos a trabajar con JDBC y a grandes rasgos vamos a realizar los siguientes pasos:**
@@ -8,8 +8,11 @@ En este proyecto vamos a agregar el uso de persistencia (JDBC + JPA) al proyecto
 	<li>Agregar la dependencia de spring JDBC</li>
 	<li>Agergar dependencia para el DBMS lightweight <a href="https://www.h2database.com/html/main.html">Página oficial H2</a></li>
 	<li>Prefijar el nombre de la BD en el archivo <b>applications.properties</b></li>
-	<li>Agregar un campo id a los objetos del dominio que no lo tengan</li>
-	<li>Vamos a agregar campos de fecha de alta (mini auditoria) a Pizza y OrdenPizza</li>
+	<li>Agregar un campo id a los objetos del dominio que no lo tengan (Del tipo Long)</li>
+	<li>Crear el archivo schema.sql con el DDL de las tablas y ponerlo en /src/main/resources</li>
+	<li>Crear el archivo data.sql con los datos precargados de las tablas y ponerlo en /src/main/resources</li> 
+	<li>Cambiar el controller DiseniarPizzaController para que utilice el repo de Ingredientes</li>
+	<li>También debemos hacer lo mismo con el Converter IngredienteConverter</li> 
 </ol>
 
 
@@ -46,3 +49,24 @@ spring:
 ```
 
 La URL de acceso a la BD va a ser **jdbc:h2:mem:pizzadb**
+
+
+## Acceder a la consola web de H2
+
+Para poder tener acceso a la BD debemos habilitar la consola embebida que provee h2.
+
+Para eso, vamoa a editar el archivo application.yml y agregar las siguientes lineas:
+
+```yml
+  h2:
+    console.enabled: true
+```
+
+Para acceder a la consola, una vez levantada la app debemos ir a la siguiente URL en el browser:
+
+[http://localhost:8080/h2-console/](http://localhost:8080/h2-console/)
+
+
+La URL de acceso a la bd del proyecto es la siguiente:
+
+jdbc:h2:mem:pizzadb

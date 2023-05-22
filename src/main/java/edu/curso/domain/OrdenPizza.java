@@ -13,6 +13,8 @@ import lombok.Data;
 @Data
 public class OrdenPizza {
 	
+	private Long id;
+	
 	//Datos de la entrega
 	@NotBlank(message="El campo es requerido")
 	private String nombrePersona;

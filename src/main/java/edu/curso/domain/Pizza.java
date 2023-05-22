@@ -9,6 +9,8 @@ import lombok.Data;
 @Data
 public class Pizza {
 	
+	private Long id;
+	
 	@NotNull
 	@Size(min=5, max=20, message="El largo mínimo debe ser {min} y el máximo {max}")
 	private String nombre;
